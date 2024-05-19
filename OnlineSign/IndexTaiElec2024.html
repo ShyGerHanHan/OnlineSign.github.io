@@ -53,11 +53,14 @@
         }
         .signature-pad {
             border: 2px solid black; /* 設定簽名區塊的黑色邊框 */
-            width: 15em; 
-            height: 5em; 
+            width: 12em; 
+            height: 4em; 
         }
         .button {
             font-size: 1em; /* 設置清除按鈕字體大小 */
+        }
+        .zoom-text {
+            font-size: 2em; /* 設置 "頁面比例調整" 文字大小為2倍 */
         }
         
     </style>
@@ -68,8 +71,9 @@
     <div id="chart3">
        
         <br>
-            <button onclick="zoomIn()">+</button>頁面比例縮放
-            <button onclick="zoomOut()">-</button>
+        <button onclick="zoomIn()" style="font-size: 2em;">+</button>
+        <span class="zoom-text">頁面比例調整</span>
+        <button onclick="zoomOut()"style="font-size: 2em;">-</button>
         <br>
         
     <div class="text-content">
@@ -101,7 +105,7 @@
     </div>
         
     <div class="text-content">
-        須遵守事項：
+      ◆須遵守事項：
         1.須遵守職業安全衛生法及其施行細則、職業安全衛生設施規則等規定。
         2.作業中必須配戴安全帽、安全鞋、手套、反光背心等個人防護具。
         3.每日作業前須針對作業區域完成機具、設備、器具之自動檢查後方得作業。
@@ -110,19 +114,17 @@
         6.高差2M以上應有防護措施。
     </div>
         
+        <button onclick="zoomIn()" >+</button>
+        <span>頁面比例調整</span>
+        <button onclick="zoomOut()">-</button><br>
         
         <br>
-        <canvas class="signature-pad" width="200em" height="100em"></canvas>
-        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
-        <canvas class="signature-pad" width="200em" height="100em"></canvas>
-        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
-        <canvas class="signature-pad" width="200em" height="100em"></canvas>
-        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
-        <canvas class="signature-pad" width="200em" height="100em"></canvas>
-        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
-        <canvas class="signature-pad" width="200em" height="100em"></canvas>
-        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
-        <canvas class="signature-pad" width="200em" height="100em"></canvas>
+        <canvas class="signature-pad" width="120em" height="60em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>        <canvas class="signature-pad" width="120em" height="60em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>        <canvas class="signature-pad" width="120em" height="60em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>        <canvas class="signature-pad" width="120em" height="60em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>        <canvas class="signature-pad" width="120em" height="60em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>        <canvas class="signature-pad" width="120em" height="60em"></canvas>
         <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
     <div>
     <table border="1">

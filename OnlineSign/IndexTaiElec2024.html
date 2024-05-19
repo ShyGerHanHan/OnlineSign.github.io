@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            margin: 5px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 300vh;
+            /*font-size: 1em;*/
+        }
+        
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #000;
+        }
+        #container {
+            border: 1px solid #000;
+            padding: 2px;
+            width: 90%;
+            height: 90%;
+        }
+        #chart3 {
+            border: 1px solid #000;
+            padding: 20px;
+            width: 90%;
+            height: 90%;
+            display: inline-block;
+        }
+        .text-content {
+            text-align: left;
+            margin: 2px auto;
+            border: 1px solid #ccc;
+            padding: 2px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap; /* Ensures that whitespace is respected */
+        }
+        .preview {
+            width: 20em;
+            height: 15em;
+            object-fit: cover;
+            display: none;
+        }
+        .signature-pad {
+            border: 2px solid black; /* 設定簽名區塊的黑色邊框 */
+            width: 15em; 
+            height: 5em; 
+        }
+        .button {
+            font-size: 1em; /* 設置清除按鈕字體大小 */
+        }
+        
+    </style>
+</head>
+
+
+<body>
+    <div id="chart3">
+       
+        <br>
+            <button onclick="zoomIn()">+</button>頁面比例縮放
+            <button onclick="zoomOut()">-</button>
+        <br>
+        
+    <div class="text-content">
+    ◆作業日期：　　<input type="date" id="workday" >
+    ◆作業人數：　　<input type="number" id="persons" name="persons" min="1" max="100" step="1">
+    ◆作業地點：　　<input type="text" id="workarea" >
+    ◆工地負責人：　<input type="text" id="admin" >
+    </div>
+        
+    <div class="text-content">        
+    ◆作業項目：
+        <input type="checkbox" name="" value="" checked="checked"/>流量施測及河川含沙量取樣<input type="checkbox" name="" value="" checked="checked"/>水位觀測及電子資料蒐錄
+        <input type="checkbox" name="" value="" checked="checked"/>流量測站環境整理
+
+        <input type="checkbox" name="" value="" checked="checked"/>雨量資料蒐錄<input type="checkbox" name="" value="" checked="checked"/>氣象資料蒐錄
+        <input type="checkbox" name="" value="" checked="checked"/>雨量及氣象站環境整理
+
+        <input type="checkbox" name="" value="" />流量站河床大斷面測量
+        <input type="checkbox" name="" value="" />其他作業<input type="text" id="otherworkitem" >
+    ◆使用機具、設備名稱：
+        <input type="checkbox"name=""value=""checked="checked"/>流速儀<input type="checkbox"name=""value="">經緯儀<input type="checkbox"name=""value="">衛星定位儀<input type="checkbox"name=""value="">箱尺<input type="checkbox"name=""value="">割草機<input type="checkbox"name=""value=""/>其他：<input type="text" id="otheritem" >
+    ◆注意(特別宣導)事項：
+        <input type="checkbox" name="" value="" checked="checked"/>戴好安全帽、扣好頤帶<input type="checkbox" name="" value="" checked="checked"/>著反光背心
+        <input type="checkbox" name="" value="" checked="checked"/>行前注意目的地交通及氣象資訊<input type="checkbox" name="" value="" checked="checked"/>行前車輛自主安全檢查
+        <input type="checkbox" name="" value="" checked="checked"/>機具、設備使用前自主檢查<input type="checkbox" name="" value="" checked="checked"/>注意高處作業穩定性
+        <input type="checkbox" name="" value="" checked="checked"/>注意現場整理整頓<input type="checkbox" name="" value="" checked="checked"/>作業中注意天氣變化
+        <input type="checkbox" name="" value="" checked="checked"/>鄰道路作業置放三角椎<input type="checkbox" name="" value="" checked="checked"/>注意鄰水作業防止落水<input type="checkbox" name="" value="" checked="checked"/>注意防止熱危害
+        <input type="checkbox" name="" value="" checked="checked"/>注意蜂蛇叮咬<input type="checkbox" name="" value="" checked="checked"/>其他<input type="text" id="otherharzard" >
+    </div>
+        
+    <div class="text-content">
+        須遵守事項：
+        1.須遵守職業安全衛生法及其施行細則、職業安全衛生設施規則等規定。
+        2.作業中必須配戴安全帽、安全鞋、手套、反光背心等個人防護具。
+        3.每日作業前須針對作業區域完成機具、設備、器具之自動檢查後方得作業。
+        4.鄰近道路施工須設置路障、三角錐；工作人員須穿著顏色鮮明之反光背心。
+        5.臨水作業時穿著救生衣及防滑鞋。
+        6.高差2M以上應有防護措施。
+    </div>
+        
+        
+        <br>
+        <canvas class="signature-pad" width="200em" height="100em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
+        <canvas class="signature-pad" width="200em" height="100em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
+        <canvas class="signature-pad" width="200em" height="100em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
+        <canvas class="signature-pad" width="200em" height="100em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
+        <canvas class="signature-pad" width="200em" height="100em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
+        <canvas class="signature-pad" width="200em" height="100em"></canvas>
+        <button class="button" onclick="clearSignature(this.previousElementSibling)">清除</button>
+    <div>
+    <table border="1">
+        <tr>
+            <td>
+                <p>工具箱會議照片上傳</p>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="file" name="file1" accept="image/*" id="fileInput1">
+                <img id="preview1" class="preview" alt="Image Preview 1">
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+        
+        
+    <br>
+    <button class="button" onclick="screenshot()">頁面截圖</button>
+</div>
+
+        <script>
+            function setupSignaturePad(canvas) {
+                var ctx = canvas.getContext('2d');
+                var drawing = false;
+
+                function getMousePos(canvas, event) {
+                    var rect = canvas.getBoundingClientRect();
+                    var scaleX = canvas.width / rect.width;   // 計算水平縮放比例
+                    var scaleY = canvas.height / rect.height;  // 計算垂直縮放比例
+                    return {
+                        x: (event.clientX - rect.left) * scaleX,  // 計算實際位置
+                        y: (event.clientY - rect.top) * scaleY   // 計算實際位置
+                    };
+                }
+
+                function getTouchPos(canvas, touchEvent) {
+                    var rect = canvas.getBoundingClientRect();
+                    var scaleX = canvas.width / rect.width;   // 計算水平縮放比例
+                    var scaleY = canvas.height / rect.height;  // 計算垂直縮放比例
+                    return {
+                        x: (touchEvent.touches[0].clientX - rect.left) * scaleX, // 計算實際位置
+                        y: (touchEvent.touches[0].clientY - rect.top) * scaleY   // 計算實際位置
+                    };
+                }
+
+                canvas.addEventListener('mousedown', function(event) {
+                    drawing = true;
+                    var pos = getMousePos(canvas, event);
+                    ctx.beginPath();
+                    ctx.moveTo(pos.x, pos.y);
+                });
+
+                canvas.addEventListener('mousemove', function(event) {
+                    if (!drawing) return;
+                    var pos = getMousePos(canvas, event);
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                });
+
+                canvas.addEventListener('mouseup', function() {
+                    drawing = false;
+                });
+
+                canvas.addEventListener('mouseout', function() {
+                    drawing = false;
+                });
+
+                canvas.addEventListener('touchstart', function(event) {
+                    drawing = true;
+                    var pos = getTouchPos(canvas, event);
+                    ctx.beginPath();
+                    ctx.moveTo(pos.x, pos.y);
+                    event.preventDefault();
+                });
+
+                canvas.addEventListener('touchmove', function(event) {
+                    if (!drawing) return;
+                    var pos = getTouchPos(canvas, event);
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                    event.preventDefault();
+                });
+
+                canvas.addEventListener('touchend', function() {
+                    drawing = false;
+                });
+
+                canvas.addEventListener('touchcancel', function() {
+                    drawing = false;
+                });
+            }
+    // 設置每個簽名板
+            var signaturePads = document.querySelectorAll('.signature-pad');
+            signaturePads.forEach(function(canvas) {
+                setupSignaturePad(canvas);
+            });
+
+            function screenshot() {
+                html2canvas(document.getElementById('chart3')).then(function(canvas) {
+                    var a = document.createElement('a');
+                    a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                    a.download = 'image.jpg';
+                    a.click();
+                });
+            }
+
+            function clearSignature(canvas) {
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        </script>
+    
+        <script>
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android終端或者uc瀏覽器 
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios終端 
+
+        if (isAndroid) {
+            // Remove 'capture' attribute to allow choosing from gallery
+            document.querySelector("input[name='file1']").removeAttribute('capture');
+            document.querySelector("input[name='file2']").removeAttribute('capture');
+        }
+
+        function handleFileSelect(event, previewId) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.getElementById(previewId);
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.getElementById('fileInput1').addEventListener('change', function(event) {
+            handleFileSelect(event, 'preview1');
+        });
+
+        document.getElementById('fileInput2').addEventListener('change', function(event) {
+            handleFileSelect(event, 'preview2');
+        });
+    </script>
+    <script>
+        let zoomLevel = 1;
+
+        function zoomIn() {
+            zoomLevel += 0.1;
+            document.body.style.transform = `scale(${zoomLevel})`;
+            document.body.style.transformOrigin = '0 0';
+            document.body.style.width = `${100 / zoomLevel}%`;
+        }
+
+        function zoomOut() {
+            zoomLevel -= 0.1;
+            if (zoomLevel < 0.1) zoomLevel = 0.1; // Prevent zooming out too much
+            document.body.style.transform = `scale(${zoomLevel})`;
+            document.body.style.transformOrigin = '0 0';
+            document.body.style.width = `${100 / zoomLevel}%`;
+        }
+    </script>
+</body>
+</html>
